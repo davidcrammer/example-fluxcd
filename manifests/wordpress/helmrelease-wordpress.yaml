@@ -19,3 +19,7 @@ spec:
   upgrade:
     remediation:
       retries: 3
+  values:
+    wordpressUsername: admin
+    wordpressPassword: admin
+    wordpressEmail: dcrammer777@gmail.com
