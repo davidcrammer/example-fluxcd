@@ -22,11 +22,12 @@ jobs:
           mkdir -p ~/.kube
           echo "${{ secrets.KUBE_CONFIG }}" | base64 -d > ~/.kube/config
 
-      - name: Install Flux CLI
+      - name: Download Flux CLI
         run: |
-          curl -s https://toolkit.fluxcd.io/install.sh -o install-flux.sh
-          chmod +x install-flux.sh
-          sudo ./install-flux.sh
+          curl -sLO https://toolkit.fluxcd.io/install.sh
+          file install.sh
+          chmod +x install.sh
+          ./install.sh
 
       - name: Reconcile Git Source
         run: |
