@@ -36,11 +36,11 @@ jobs:
       - name: Reconcile All Kustomizations
         run: |
           for kustomization in $(flux get kustomizations --all-namespaces | awk 'NR>1 {print $1}'); do
-              flux reconcile $kustomization
+              flux reconcile kustomization $kustomization
           done
 
       - name: Reconcile All HelmReleases (if you use Helm)
         run: |
           for helmrelease in $(flux get helmreleases --all-namespaces | awk 'NR>1 {print $1}'); do
-            flux reconcile $helmrelease
+            flux reconcile helmrelease $helmrelease
           done
