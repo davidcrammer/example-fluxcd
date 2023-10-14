@@ -31,7 +31,7 @@ jobs:
 
       - name: Reconcile Git Source
         run: |
-          flux reconcile source git <name-of-your-git-repo-source> --namespace=<namespace-where-flux-is-installed>
+          flux reconcile source git flux-system --namespace=flux-system
 
       - name: Reconcile All Kustomizations
         run: |
