@@ -23,3 +23,6 @@ spec:
     wordpressUsername: admin
     wordpressPassword: admin
     wordpressEmail: dcrammer777@gmail.com
+    mariadb:
+      db:
+        password: dcrammer777
