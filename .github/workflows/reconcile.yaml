@@ -19,6 +19,7 @@ jobs:
 
       - name: Configure Kubernetes Context
         run: |
+          mkdir -p ~/.kube
           echo "${{ secrets.KUBE_CONFIG }}" | base64 -d > ~/.kube/config
 
       - name: Install Flux CLI
