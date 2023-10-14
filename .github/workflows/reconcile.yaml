@@ -1,0 +1,42 @@
+name: Reconcile Flux Resources
+
+on:
+  push: # or any other trigger you prefer
+    branches:
+      - main
+
+jobs:
+  reconcile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup Kubectl
+        uses: azure/setup-kubectl@v1
+        with:
+          version: "latest"
+
+      - name: Configure Kubernetes Context
+        run: |
+          echo "${{ secrets.KUBE_CONFIG }}" | base64 -d > ~/.kube/config
+
+      - name: Install Flux CLI
+        run: |
+          curl -s https://toolkit.fluxcd.io/install.sh | sudo bash
+
+      - name: Reconcile Git Source
+        run: |
+          flux reconcile source git <name-of-your-git-repo-source> --namespace=<namespace-where-flux-is-installed>
+
+      - name: Reconcile All Kustomizations
+        run: |
+          for kustomization in $(flux get kustomizations --all-namespaces -o name); do
+              flux reconcile $kustomization
+          done
+
+      - name: Reconcile All HelmReleases (if you use Helm)
+        run: |
+          for helmrelease in $(flux get helmreleases --all-namespaces -o name); do
+              flux reconcile $helmrelease
+          done
