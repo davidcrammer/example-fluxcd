@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: hello-node-app
-  # namespace: <your-namespace> # Uncomment and specify if needed
+  namespace: default
 spec:
   replicas: 1
   selector: # This is required for the Deployment to select the appropriate pods
