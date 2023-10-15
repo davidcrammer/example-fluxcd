@@ -1,0 +1,16 @@
+replicaCount: 1
+
+image:
+  repository: registry.digitalocean.com/dc-containers-test/hello-node-app
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 3000
+
+ingress:
+  enabled: false
+
+resources: {}
