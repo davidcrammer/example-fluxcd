@@ -18,3 +18,5 @@ spec:
       containers:
         - name: hello-node-app
           image: registry.digitalocean.com/dc-containers-test/hello-node-app:latest
+          ports:
+            - containerPort: 8080
