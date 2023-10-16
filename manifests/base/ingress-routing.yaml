@@ -10,14 +10,14 @@ spec:
   rules:
     - http:
         paths:
-          - path: /app1/
+          - path: /test/
             pathType: Prefix
             backend:
               service:
                 name: hello-node-app-service
                 port:
                   number: 80
-          - path: /
+          - path: /test2/
             pathType: Prefix
             backend:
               service:
