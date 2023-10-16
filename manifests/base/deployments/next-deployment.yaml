@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hello-node-app
+  name: text-next-app
   namespace: default
 spec:
   replicas: 1
   selector: # This is required for the Deployment to select the appropriate pods
     matchLabels:
-      app: hello-node-app
+      app: text-next-app
   template:
     metadata:
       labels:
-        app: hello-node-app
+        app: text-next-app
     spec:
       imagePullSecrets:
         - name: docr-secret
       containers:
-        - name: test-next-app
+        - name: text-next-app
           image: registry.digitalocean.com/dc-containers-test/text-next-app:latest
           ports:
             - containerPort: 3000

@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-node-app
+  namespace: default
+spec:
+  replicas: 1
+  selector: # This is required for the Deployment to select the appropriate pods
+    matchLabels:
+      app: hello-node-app
+  template:
+    metadata:
+      labels:
+        app: hello-node-app
+    spec:
+      imagePullSecrets:
+        - name: docr-secret
+      containers:
+        - name: hello-node-app
+          image: registry.digitalocean.com/dc-containers-test/hello-node-app:latest
+          ports:
+            - containerPort: 8080
