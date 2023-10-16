@@ -16,7 +16,7 @@ spec:
       imagePullSecrets:
         - name: docr-secret
       containers:
-        - name: hello-node-app
-          image: registry.digitalocean.com/dc-containers-test/hello-node-app:latest
+        - name: test-next-app
+          image: registry.digitalocean.com/dc-containers-test/test-next-app:latest
           ports:
             - containerPort: 8080
