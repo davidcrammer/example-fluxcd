@@ -5,3 +5,4 @@ resources:
   - deployments/next-deployment.yaml
   - services/hello-service.yaml
   - services/next-service.yaml
+  - ingress-routing.yaml
