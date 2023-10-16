@@ -40,14 +40,3 @@ jobs:
           for kustomization in $(flux get kustomizations --all-namespaces | awk 'NR>1 {print $1}'); do
               flux reconcile kustomization $kustomization
           done
-
-      - name: Reconcile All HelmReleases
-        run: |
-          for helmrelease in $(flux get helmreleases --all-namespaces | awk 'NR>1 {print $2 "/" $1}'); do
-            namespace=$(echo $helmrelease | cut -f1 -d'/')
-            name=$(echo $helmrelease | cut -f2 -d'/')
-            flux reconcile helmrelease $name --namespace=$namespace
-            if ! flux reconcile helmrelease $name --namespace=$namespace; then
-                echo "Failed to process $name in $namespace"
-            fi
-          done
