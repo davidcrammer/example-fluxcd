@@ -6,4 +6,3 @@ resources:
   - services/hello-service.yaml
   - services/next-service.yaml
   - ingress-routing.yaml
-  - letsencrypt-galvanizer.yaml
