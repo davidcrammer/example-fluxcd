@@ -17,6 +17,6 @@ spec:
         - name: docr-secret
       containers:
         - name: test-next-app
-          image: registry.digitalocean.com/dc-containers-test/test-next-app:latest
+          image: registry.digitalocean.com/dc-containers-test/text-next-app:latest
           ports:
             - containerPort: 8080
