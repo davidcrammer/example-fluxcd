@@ -3,3 +3,5 @@ kind: Kustomization
 resources:
   - deployments/example-deployment.yaml
   - deployments/next-deployment.yaml
+  - services/hello-service.yaml
+  - services/next-service.yaml
