@@ -24,7 +24,7 @@ spec:
                 name: hello-node-app-service
                 port:
                   number: 80
-    - host: 146.190.15.153
+    - host: app2.galvanizer.app
       http:
         paths:
           - pathType: Prefix
