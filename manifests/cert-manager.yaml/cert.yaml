@@ -1,0 +1,17 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: galvanizer-tls
+  namespace: default
+spec:
+  secretName: galvanizer-tls-secret
+  duration: 2160h # 90d
+  renewBefore: 360h # 15d
+  issuerRef:
+    name: letsencrypt-prod # or letsencrypt-staging for testing
+    kind: ClusterIssuer
+  dnsNames:
+    - galvanizer.app
+    - www.galvanizer.app
+    - app1.galvanizer.app
+    - app2.galvanizer.app
