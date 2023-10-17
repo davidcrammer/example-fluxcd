@@ -3,6 +3,6 @@ kind: Kustomization
 resources:
   - deployments/example-deployment.yaml
   - deployments/next-deployment.yaml
-  # - deployments/frontend-test-dashboard-next-deployment.yaml
+  - deployments/frontend-test-dashboard-next-deployment.yaml
   - ingress-routing.yaml
-  # - gitrepo.yaml
+  - gitrepo.yaml
