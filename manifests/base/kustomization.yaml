@@ -5,4 +5,4 @@ resources:
   - deployments/next-deployment.yaml
   - deployments/frontend-test-dashboard-next-deployment.yaml
   - ingress-routing.yaml
-  - gitrepo.yaml
+  # - gitrepo.yaml

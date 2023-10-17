@@ -28,7 +28,7 @@ spec:
   interval: 1m
   sourceRef:
     kind: GitRepository
-    name: default-repo
+    name: flux-system
   git:
     checkout:
       ref:
