@@ -1,4 +1,4 @@
-apiVersion: image.toolkit.fluxcd.io/v1alpha1
+apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImageRepository
 metadata:
   name: frontend-test-dashboard-next-image
@@ -7,7 +7,7 @@ spec:
   interval: 1m
   image: registry.digitalocean.com/dc-containers-test/frontend-test-dashboard-next
 ---
-apiVersion: image.toolkit.fluxcd.io/v1alpha1
+apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImagePolicy
 metadata:
   name: frontend-test-dashboard-next-policy
@@ -19,7 +19,7 @@ spec:
     semver:
       range: ">=1.0.0"
 ---
-apiVersion: image.toolkit.fluxcd.io/v1alpha1
+apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImageUpdateAutomation
 metadata:
   name: frontend-test-dashboard-next-update
