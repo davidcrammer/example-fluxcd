@@ -17,7 +17,7 @@ spec:
     name: frontend-test-dashboard-next-image
   policy:
     semver:
-      range: ">=1.0.0"
+      range: ">=v1.0.0"
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImageUpdateAutomation
@@ -47,7 +47,7 @@ metadata:
   namespace: default
   annotations:
     fluxcd.io/automated: "true"
-    fluxcd.io/tag.frontend-test-dashboard-next: semver:>=1.0.0
+    fluxcd.io/tag.frontend-test-dashboard-next: semver:>=v1.0.0
 spec:
   replicas: 1
   selector: # This is required for the Deployment to select the appropriate pods
@@ -62,7 +62,7 @@ spec:
         - name: docr-secret
       containers:
         - name: frontend-test-dashboard-next
-          image: registry.digitalocean.com/dc-containers-test/frontend-test-dashboard-next:v1.0.3
+          image: registry.digitalocean.com/dc-containers-test/frontend-test-dashboard-next:v0.0.0
           ports:
             - containerPort: 3000
 ---
