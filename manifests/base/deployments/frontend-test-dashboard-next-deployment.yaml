@@ -42,7 +42,6 @@ spec:
         email: fluxcdbot@users.noreply.github.com
       messageTemplate: automated update to image(s) in flux-system
     push:
-      path: ./manifests
       branch: main
   update:
     strategy: Setters
