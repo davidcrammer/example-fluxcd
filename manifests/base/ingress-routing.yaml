@@ -12,13 +12,13 @@ spec:
     - hosts:
         - app1.galvanizer.app
         - app2.galvanizer.app
-      secretName: galvanizer-tls
+      secretName: galvanizer-tls-secret
   rules:
     - host: app1.galvanizer.app
       http:
         paths:
           - pathType: Prefix
-            path: "/"
+            path: /
             backend:
               service:
                 name: hello-node-app-service
