@@ -6,6 +6,8 @@ metadata:
 spec:
   interval: 1m
   image: registry.digitalocean.com/dc-containers-test/frontend-test-dashboard-next
+  secretRef:
+    name: docr-secret
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImagePolicy
