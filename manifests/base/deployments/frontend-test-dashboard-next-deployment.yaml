@@ -38,8 +38,12 @@ spec:
         branch: main
     commit:
       author:
-        name: fluxbot
-        email: david@davidcrammer.com
+        name: fluxcdbot
+        email: fluxcdbot@users.noreply.github.com
+      messageTemplate: automated update to image(s) in flux-system
+    push:
+      path: ./manifests
+      branch: main
   update:
     strategy: Setters
 ---
@@ -65,8 +69,7 @@ spec:
         - name: docr-secret
       containers:
         - name: frontend-test-dashboard-next
-          # {"$imagepolicy": "default:frontend-test-dashboard-next-policy"}
-          image: registry.digitalocean.com/dc-containers-test/frontend-test-dashboard-next:v1.0.3
+          image: registry.digitalocean.com/dc-containers-test/frontend-test-dashboard-next:v1.0.3 # {"$imagepolicy": "default:frontend-test-dashboard-next-policy"}
           ports:
             - containerPort: 3000
 ---
