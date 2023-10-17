@@ -10,10 +10,22 @@ metadata:
 spec:
   tls:
     - hosts:
+        - galvanizer.app
+        - www.galvanizer.app
         - app1.galvanizer.app
         - app2.galvanizer.app
       secretName: galvanizer-tls-secret
   rules:
+    - host: galvanizer.app
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: frontend-test-dashboard-next-service
+                port:
+                  number: 80
     - host: app1.galvanizer.app
       http:
         paths:

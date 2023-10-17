@@ -1,0 +1,81 @@
+apiVersion: image.toolkit.fluxcd.io/v1alpha1
+kind: ImageRepository
+metadata:
+  name: frontend-test-dashboard-next-image
+  namespace: default
+spec:
+  interval: 1m
+  image: registry.digitalocean.com/dc-containers-test/frontend-test-dashboard-next
+---
+apiVersion: image.toolkit.fluxcd.io/v1alpha1
+kind: ImagePolicy
+metadata:
+  name: frontend-test-dashboard-next-policy
+  namespace: default
+spec:
+  imageRepositoryRef:
+    name: frontend-test-dashboard-next-image
+  policy:
+    semver:
+      range: ">=1.0.0"
+---
+apiVersion: image.toolkit.fluxcd.io/v1alpha1
+kind: ImageUpdateAutomation
+metadata:
+  name: frontend-test-dashboard-next-update
+  namespace: default
+spec:
+  interval: 1m
+  sourceRef:
+    kind: GitRepository
+    name: default-repo
+  git:
+    checkout:
+      ref:
+        branch: main
+    commit:
+      author:
+        name: fluxbot
+        email: david@davidcrammer.com
+  update:
+    strategy: Setters
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-test-dashboard-next
+  namespace: default
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.your-container-name: semver:>=1.0.0
+spec:
+  replicas: 1
+  selector: # This is required for the Deployment to select the appropriate pods
+    matchLabels:
+      app: frontend-test-dashboard-next
+  template:
+    metadata:
+      labels:
+        app: frontend-test-dashboard-next
+    spec:
+      imagePullSecrets:
+        - name: docr-secret
+      containers:
+        - name: frontend-test-dashboard-next
+          image: registry.digitalocean.com/dc-containers-test/frontend-test-dashboard-next:v1.0.3
+          ports:
+            - containerPort: 3000
+---
+# app1-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-test-dashboard-next-service
+  namespace: default
+spec:
+  selector:
+    app: frontend-test-dashboard-next
+  ports:
+    - port: 80
+      targetPort: 3000
+  type: ClusterIP
