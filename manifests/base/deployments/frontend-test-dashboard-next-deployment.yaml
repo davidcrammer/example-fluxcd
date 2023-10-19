@@ -68,7 +68,7 @@ spec:
         - name: docr-secret
       containers:
         - name: frontend-test-dashboard-next
-          image: registry.digitalocean.com/dc-containers-test/frontend-test-dashboard-next:v1.0.6 # {"$imagepolicy": "default:frontend-test-dashboard-next-policy"}
+          image: registry.digitalocean.com/dc-containers-test/frontend-test-dashboard-next:v1.1.0 # {"$imagepolicy": "default:frontend-test-dashboard-next-policy"}
           ports:
             - containerPort: 3000
 ---
