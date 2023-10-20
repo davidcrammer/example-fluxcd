@@ -4,5 +4,6 @@ resources:
   - deployments/example-deployment.yaml
   - deployments/next-deployment.yaml
   - deployments/frontend-test-dashboard-next-deployment.yaml
+  - deployments/service-authentication.yaml
   - ingress-routing.yaml
   # - gitrepo.yaml
