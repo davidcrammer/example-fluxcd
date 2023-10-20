@@ -12,6 +12,7 @@ spec:
     kind: ClusterIssuer
   dnsNames:
     - galvanizer.app
+    - auth.galvanizer.app
     - www.galvanizer.app
     - app1.galvanizer.app
     - app2.galvanizer.app

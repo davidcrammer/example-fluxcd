@@ -12,6 +12,7 @@ spec:
     - hosts:
         - galvanizer.app
         - www.galvanizer.app
+        - auth.galvanizer.app
         - app1.galvanizer.app
         - app2.galvanizer.app
       secretName: galvanizer-tls-secret
@@ -44,5 +45,15 @@ spec:
             backend:
               service:
                 name: text-next-app-service
+                port:
+                  number: 80
+    - host: auth.galvanizer.app
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: service-authentication-service
                 port:
                   number: 80

@@ -1,0 +1,87 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImageRepository
+metadata:
+  name: service-authentication-image
+  namespace: default
+spec:
+  interval: 1m
+  image: registry.digitalocean.com/dc-containers-test/service-authentication
+  secretRef:
+    name: docr-secret
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImagePolicy
+metadata:
+  name: service-authentication-policy
+  namespace: default
+spec:
+  imageRepositoryRef:
+    name: service-authentication-image
+  policy:
+    semver:
+      range: ">=v1.0.0"
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImageUpdateAutomation
+metadata:
+  name: service-authentication-update
+  namespace: default
+spec:
+  interval: 1m
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  git:
+    checkout:
+      ref:
+        branch: main
+    commit:
+      author:
+        name: fluxcdbot
+        email: fluxcdbot@users.noreply.github.com
+      messageTemplate: automated update to image(s) in flux-system
+    push:
+      branch: main
+  update:
+    strategy: Setters
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-authentication
+  namespace: default
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.frontend-test-dashboard-next: semver:>=v1.0.0
+spec:
+  replicas: 1
+  selector: # This is required for the Deployment to select the appropriate pods
+    matchLabels:
+      app: service-authentication
+  template:
+    metadata:
+      labels:
+        app: service-authentication
+    spec:
+      imagePullSecrets:
+        - name: docr-secret
+      containers:
+        - name: service-authentication
+          image: registry.digitalocean.com/dc-containers-test/service-authentication:v0.0.0 # {"$imagepolicy": "default:service-authentication-policy"}
+          ports:
+            - containerPort: 3000
+---
+# app1-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-authentication-service
+  namespace: default
+spec:
+  selector:
+    app: service-authentication
+  ports:
+    - port: 80
+      targetPort: 3000
+  type: ClusterIP
