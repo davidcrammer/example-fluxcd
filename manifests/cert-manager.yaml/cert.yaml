@@ -16,3 +16,4 @@ spec:
     - www.galvanizer.app
     - app1.galvanizer.app
     - app2.galvanizer.app
+    - billing.galvanizer.app
