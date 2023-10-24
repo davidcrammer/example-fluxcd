@@ -15,6 +15,7 @@ spec:
         - auth.galvanizer.app
         - app1.galvanizer.app
         - app2.galvanizer.app
+        - pay.galvanizer.app
       secretName: galvanizer-tls-secret
   rules:
     - host: galvanizer.app
@@ -55,5 +56,15 @@ spec:
             backend:
               service:
                 name: service-authentication-service
+                port:
+                  number: 80
+    - host: pay.galvanizer.app
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: service-square-payments-service
                 port:
                   number: 80

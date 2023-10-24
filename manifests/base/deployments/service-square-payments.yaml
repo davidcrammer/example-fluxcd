@@ -1,0 +1,113 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImageRepository
+metadata:
+  name: service-square-payments-image
+  namespace: default
+spec:
+  interval: 1m
+  image: registry.digitalocean.com/dc-containers-test/service-square-payments
+  secretRef:
+    name: docr-secret
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImagePolicy
+metadata:
+  name: service-square-payments-policy
+  namespace: default
+spec:
+  imageRepositoryRef:
+    name: service-square-payments-image
+  policy:
+    semver:
+      range: ">=v0.0.0"
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImageUpdateAutomation
+metadata:
+  name: service-square-payments-update
+  namespace: default
+spec:
+  interval: 1m
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  git:
+    checkout:
+      ref:
+        branch: main
+    commit:
+      author:
+        name: fluxcdbot
+        email: fluxcdbot@users.noreply.github.com
+      messageTemplate: automated update to image(s) in flux-system
+    push:
+      branch: main
+  update:
+    strategy: Setters
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-square-payments
+  namespace: default
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.frontend-test-dashboard-next: semver:>=v0.0.0
+spec:
+  replicas: 1
+  selector: # This is required for the Deployment to select the appropriate pods
+    matchLabels:
+      app: service-square-payments
+  template:
+    metadata:
+      labels:
+        app: service-square-payments
+    spec:
+      imagePullSecrets:
+        - name: docr-secret
+      containers:
+        - name: service-square-payments
+          image: registry.digitalocean.com/dc-containers-test/service-square-payments:v0.0.0 # {"$imagepolicy": "default:service-square-payments-policy"}
+          ports:
+            - containerPort: 3000
+          env:
+            - name: DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: db-credentials
+                  key: DB_HOST
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: db-credentials
+                  key: DB_NAME
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: db-credentials
+                  key: DB_USER
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: db-credentials
+                  key: DB_PASS
+            - name: DB_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: db-credentials
+                  key: DB_PORT
+---
+# app1-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-square-payments-service
+  namespace: default
+spec:
+  selector:
+    app: service-square-payments
+  ports:
+    - port: 80
+      targetPort: 3000
+  type: ClusterIP
