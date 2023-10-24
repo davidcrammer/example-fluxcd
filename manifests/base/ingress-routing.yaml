@@ -58,7 +58,7 @@ spec:
                 name: service-authentication-service
                 port:
                   number: 80
-    - host: pay.galvanizer.app
+    - host: billing.galvanizer.app
       http:
         paths:
           - pathType: Prefix
