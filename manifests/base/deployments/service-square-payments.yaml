@@ -68,7 +68,7 @@ spec:
         - name: docr-secret
       containers:
         - name: service-square-payments
-          image: registry.digitalocean.com/dc-containers-test/service-square-payments:v0.0.4 # {"$imagepolicy": "default:service-square-payments-policy"}
+          image: registry.digitalocean.com/dc-containers-test/service-square-payments:v0.0.5 # {"$imagepolicy": "default:service-square-payments-policy"}
           ports:
             - containerPort: 3000
           env:
