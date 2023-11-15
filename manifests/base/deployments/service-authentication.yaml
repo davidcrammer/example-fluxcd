@@ -68,7 +68,7 @@ spec:
         - name: docr-secret
       containers:
         - name: service-authentication
-          image: registry.digitalocean.com/dc-containers-test/service-authentication:v0.1.12 # {"$imagepolicy": "default:service-authentication-policy"}
+          image: registry.digitalocean.com/dc-containers-test/service-authentication:v0.1.13 # {"$imagepolicy": "default:service-authentication-policy"}
           ports:
             - containerPort: 3000
           env:
